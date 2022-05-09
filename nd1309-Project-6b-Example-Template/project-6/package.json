@@ -12,10 +12,6 @@
   "license": "MIT",
   "devDependencies": {
     "lite-server": "^2.6.1",
-    "@openzeppelin/contracts": "^4.5.0",
-    "@truffle/hdwallet-provider": "^2.0.1"
-  },
-  "dependencies": {
-    "@ethereumjs/tx": "^3.5.1"
+    "@truffle/hdwallet-provider": "^2.0.5"
   }
 }
