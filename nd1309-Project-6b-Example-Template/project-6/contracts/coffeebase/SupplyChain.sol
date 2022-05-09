@@ -8,6 +8,9 @@ import "../coffeeaccesscontrol/FarmerRole.sol";
 import "../coffeeaccesscontrol/RetailerRole.sol";
 import "../coffeecore/Ownable.sol";
 
+
+
+
 // Define a contract 'Supplychain'
 contract SupplyChain is
     ConsumerRole,
@@ -26,7 +29,7 @@ contract SupplyChain is
     uint256 sku;
 
     // Define a public mapping 'items' that maps the UPC to an Item.
-    mapping(uint256 => Item) public items;
+  mapping (uint => Item) items;
 
     // Define a public mapping 'itemsHistory' that maps the UPC to an array of TxHash,
     // that track its journey through the supply chain -- to be sent from DApp.
@@ -65,7 +68,7 @@ contract SupplyChain is
         address consumerID; // Metamask-Ethereum address of the Consumer
     }
 
-    // Define 8 events with the same 8 state values and accept 'upc' as input argument
+    // // Define 8 events with the same 8 state values and accept 'upc' as input argument
     event Harvested(uint256 upc);
     event Processed(uint256 upc);
     event Packed(uint256 upc);
@@ -75,11 +78,11 @@ contract SupplyChain is
     event Received(uint256 upc);
     event Purchased(uint256 upc);
 
-    // Define a modifer that checks to see if msg.sender == owner of the contract
-    // modifier onlyOwner(address owner) {
-    //     require(msg.sender == owner);
-    //     _;
-    // }
+    // // Define a modifer that checks to see if msg.sender == owner of the contract
+    // // modifier onlyOwner(address owner) {
+    // //     require(msg.sender == owner);
+    // //     _;
+    // // }
 
     // Define a modifer that verifies the Caller
     modifier verifyCaller(address _address) {
