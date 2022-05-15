@@ -110,3 +110,9 @@ See also the list of [contributors](https://github.com/your/project/contributors
 * Ganache-cli
 * Truffle
 * IPFS
+
+Truffle v5.5.13 (core: 5.5.13)
+Ganache v^7.1.0
+Solidity - 0.8.13 (solc-js)
+Node v13.8.0
+Web3.js v1.5.3
