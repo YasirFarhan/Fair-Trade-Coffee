@@ -1,7 +1,7 @@
 App = {
     web3Provider: null,
     contracts: {},
-    emptyAddress: "0x0000000000000000000000000000000000000000",
+    emptyAddress: "0x15054355fE4541C25feA001E5bdc01EbB2056b79",
     sku: 0,
     upc: 0,
     metamaskAccountID: "0x15054355fE4541C25feA001E5bdc01EbB2056b79",

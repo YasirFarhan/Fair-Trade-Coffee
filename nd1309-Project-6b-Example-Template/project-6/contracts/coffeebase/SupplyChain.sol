@@ -177,6 +177,7 @@ contract SupplyChain is
         // Add the new item as part of Harvest
         Item memory item;
         item.sku = sku;
+        item.ownerID=_originFarmerID;
         item.upc = _upc;
         item.originFarmerID = _originFarmerID;
         item.originFarmName = _originFarmName;
@@ -184,6 +185,7 @@ contract SupplyChain is
         item.originFarmLatitude = _originFarmLatitude;
         item.originFarmLongitude = _originFarmLongitude;
         item.productNotes = _productNotes;
+        item.itemState = State.Harvested;
         item.productID = sku + _upc;
         items[_upc] = item;
         // Increment sku
