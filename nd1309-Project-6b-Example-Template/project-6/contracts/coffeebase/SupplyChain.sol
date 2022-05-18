@@ -1,15 +1,11 @@
 // "SPDX-License-Identifier: MIT
 pragma solidity ^0.8.13;
 
-
 import "../coffeeaccesscontrol/ConsumerRole.sol";
 import "../coffeeaccesscontrol/DistributorRole.sol";
 import "../coffeeaccesscontrol/FarmerRole.sol";
 import "../coffeeaccesscontrol/RetailerRole.sol";
 import "../coffeecore/Ownable.sol";
-
-
-
 
 // Define a contract 'Supplychain'
 contract SupplyChain is
@@ -29,7 +25,7 @@ contract SupplyChain is
     uint256 sku;
 
     // Define a public mapping 'items' that maps the UPC to an Item.
-  mapping (uint => Item) items;
+    mapping(uint256 => Item) items;
 
     // Define a public mapping 'itemsHistory' that maps the UPC to an array of TxHash,
     // that track its journey through the supply chain -- to be sent from DApp.
@@ -111,7 +107,7 @@ contract SupplyChain is
     }
 
     // Define a modifier that checks if an item.state of a upc is Processed
-    modifier processed(uint256 _upc) {
+    modifier itemProcessed(uint256 _upc) {
         require(items[_upc].itemState == State.Processed);
         _;
     }
@@ -177,7 +173,7 @@ contract SupplyChain is
         string memory _originFarmLatitude,
         string memory _originFarmLongitude,
         string memory _productNotes
-    ) public {
+    ) public onlyFarmer {
         // Add the new item as part of Harvest
         Item memory item;
         item.sku = sku;
@@ -200,7 +196,7 @@ contract SupplyChain is
     function processItem(uint256 _upc)
         public
         // Call modifier to check if upc has passed previous supply chain stage
-        processed(_upc)
+        harvested(_upc)
         // Call modifier to verify caller of this function
         onlyFarmer
     {
@@ -215,7 +211,7 @@ contract SupplyChain is
     function packItem(uint256 _upc)
         public
         // Call modifier to check if upc has passed previous supply chain stage
-        packed(_upc)
+        // itemProcessed(_upc)        
         // Call modifier to verify caller of this function
         onlyFarmer
     {
@@ -230,7 +226,7 @@ contract SupplyChain is
     function sellItem(uint256 _upc, uint256 _price)
         public
         // Call modifier to check if upc has passed previous supply chain stage
-        sold(upc)
+        // packed(_upc)
         // Call modifier to verify caller of this function
         onlyFarmer
     {
@@ -249,7 +245,7 @@ contract SupplyChain is
         public
         payable
         // Call modifier to check if upc has passed previous supply chain stage
-        sold(_upc)
+        // sold(_upc)
         // Call modifer to check if buyer has paid enough
         paidEnough(items[_upc].productPrice)
         // Call modifer to send any excess ether back to buyer
@@ -271,7 +267,7 @@ contract SupplyChain is
     function shipItem(uint256 _upc)
         public
         // Call modifier to check if upc has passed previous supply chain stage
-        sold(_upc)
+        // sold(_upc)
         // Call modifier to verify caller of this function
         onlyDistributor
     {
@@ -288,7 +284,7 @@ contract SupplyChain is
     function receiveItem(uint256 _upc)
         public
         // Call modifier to check if upc has passed previous supply chain stage
-        sold(_upc)
+        // sold(_upc)
         // Call modifier to verify caller of this function
         onlyRetailer
     {
@@ -305,7 +301,7 @@ contract SupplyChain is
     function purchaseItem(uint256 _upc)
         public
         // Call modifier to check if upc has passed previous supply chain stage
-        processed(_upc)
+        // processed(_upc)
         // Access Control List enforced by calling Smart Contract / DApp
         onlyConsumer
     {
