@@ -245,7 +245,7 @@ contract SupplyChain is
         public
         payable
         // Call modifier to check if upc has passed previous supply chain stage
-        // sold(_upc)
+        sold(_upc)
         // Call modifer to check if buyer has paid enough
         paidEnough(items[_upc].productPrice)
         // Call modifer to send any excess ether back to buyer
