@@ -177,7 +177,7 @@ contract SupplyChain is
         // Add the new item as part of Harvest
         Item memory item;
         item.sku = sku;
-        item.ownerID=_originFarmerID;
+        item.ownerID = _originFarmerID;
         item.upc = _upc;
         item.originFarmerID = _originFarmerID;
         item.originFarmName = _originFarmName;
@@ -205,6 +205,7 @@ contract SupplyChain is
         // Update the appropriate fields
         Item memory item = items[_upc];
         item.itemState = State.Processed;
+        items[_upc] = item;
         // Emit the appropriate event
         emit Processed(_upc);
     }
@@ -213,7 +214,7 @@ contract SupplyChain is
     function packItem(uint256 _upc)
         public
         // Call modifier to check if upc has passed previous supply chain stage
-        // itemProcessed(_upc)        
+        // itemProcessed(_upc)
         // Call modifier to verify caller of this function
         onlyFarmer
     {
@@ -246,12 +247,12 @@ contract SupplyChain is
     function buyItem(uint256 _upc)
         public
         payable
-        // Call modifier to check if upc has passed previous supply chain stage
-        // sold(_upc)
-        // Call modifer to check if buyer has paid enough
-        // paidEnough(items[_upc].productPrice)
-        // Call modifer to send any excess ether back to buyer
-        // checkValue(_upc)
+    // Call modifier to check if upc has passed previous supply chain stage
+    // sold(_upc)
+    // Call modifer to check if buyer has paid enough
+    // paidEnough(items[_upc].productPrice)
+    // Call modifer to send any excess ether back to buyer
+    // checkValue(_upc)
     {
         // Update the appropriate fields - ownerID, distributorID, itemState
         Item memory item = items[_upc];
