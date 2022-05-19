@@ -88,10 +88,10 @@ contract('SupplyChain', function (accounts) {
         var eventEmitted = false
 
         // Watch the emitted event Processed()
-        var event = supplyChain.processItem(upc, { from: originFarmerID })
+        var event = supplyChain.processItem(upc)
 
         // Mark an item as Processed by calling function processtItem()
-        await supplyChain.processItem(upc)
+        await supplyChain.processItem(upc, { from: ownerID })
 
         // Retrieve the just now saved item from blockchain by calling function fetchItem()
         const resultBufferOne = await supplyChain.fetchItemBufferOne.call(upc)
