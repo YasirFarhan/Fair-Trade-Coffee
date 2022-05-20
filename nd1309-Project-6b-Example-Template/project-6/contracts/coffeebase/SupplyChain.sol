@@ -113,10 +113,14 @@ contract SupplyChain is
     }
 
     // Define a modifier that checks if an item.state of a upc is Packed
-    modifier packed(uint256 _upc) {
+
+
+  modifier packed(uint256 _upc) {
         require(items[_upc].itemState == State.Packed);
         _;
     }
+
+
 
     // Define a modifier that checks if an item.state of a upc is ForSale
     modifier forSale(uint256 _upc) {
@@ -214,7 +218,7 @@ contract SupplyChain is
     function packItem(uint256 _upc)
         public
         // Call modifier to check if upc has passed previous supply chain stage
-        // itemProcessed(_upc)
+        itemProcessed(_upc)
         // Call modifier to verify caller of this function
         onlyFarmer
     {
@@ -229,13 +233,13 @@ contract SupplyChain is
     function sellItem(uint256 _upc, uint256 _price)
         public
         // Call modifier to check if upc has passed previous supply chain stage
-        // packed(_upc)
+        packed(_upc)
         // Call modifier to verify caller of this function
         onlyFarmer
     {
         // Update the appropriate fields
         Item memory item = items[_upc];
-        item.itemState = State.Sold;
+        item.itemState = State.Packed;
         item.productPrice = _price;
         // Emit the appropriate event
         emit Sold(_upc);
@@ -329,8 +333,9 @@ contract SupplyChain is
             string memory originFarmName,
             string memory originFarmInformation,
             string memory originFarmLatitude,
-            string memory originFarmLongitude
+            string memory originFarmLongitude //,
         )
+    // State  itemState
     {
         // Assign values to the 8 parameters
         Item memory item = items[_upc];
@@ -342,7 +347,8 @@ contract SupplyChain is
             originFarmName = item.originFarmName,
             originFarmInformation = item.originFarmInformation,
             originFarmLatitude = item.originFarmLatitude,
-            originFarmLongitude = item.originFarmLongitude
+            originFarmLongitude = item.originFarmLongitude //,
+            // itemState = item.itemState
         );
     }
 
