@@ -134,7 +134,7 @@ contract('SupplyChain', function (accounts) {
         // Declare and Initialize a variable for event
         // Watch the emitted event ForSale()
         // var event = supplyChain.packItem(upc)
-        // let price = 1;
+
         const price = web3.utils.toWei('1', "ether");
         await supplyChain.harvestItem(upc, originFarmerID, originFarmName, originFarmInformation, originFarmLatitude, originFarmLongitude, productNotes)
         await supplyChain.processItem(upc, { from: ownerID })
@@ -147,30 +147,34 @@ contract('SupplyChain', function (accounts) {
         // assert.equal(resultBufferOne[0], 4, 'Error: Invalid item SKU')
     })
 
-    // // 5th Test
-    // it("Testing smart contract function buyItem() that allows a distributor to buy coffee", async () => {
-    //     // const supplyChain = await SupplyChain.deployed()
+    // 5th Test
+    it("Testing smart contract function buyItem() that allows a distributor to buy coffee", async () => {
+        // const supplyChain = await SupplyChain.deployed()
 
-    //     // Declare and Initialize a variable for event
+        // Declare and Initialize a variable for event
 
-    //     // Watch the emitted event Sold()
-    //     var event = supplyChain.buyItem(upc)
+        // Watch the emitted event Sold()
+        // var event = supplyChain.buyItem(upc)
 
-    //     // Mark an item as Sold by calling function buyItem()
-    //     let balance = web3.utils.toWei(".05", "ether");
-    //     await supplyChain.buyItem(upc, { from: originFarmerID, value: balance });
-    //     // Retrieve the just now saved item from blockchain by calling function fetchItem()
-    //     const resultBufferOne = await supplyChain.fetchItemBufferOne.call(upc)
-    //     const resultBufferTwo = await supplyChain.fetchItemBufferTwo.call(upc)
+        // Mark an item as Sold by calling function buyItem()
+        let balance = web3.utils.toWei("2", "ether");
+        const price = web3.utils.toWei('1', "ether");
+        await supplyChain.harvestItem(upc, originFarmerID, originFarmName, originFarmInformation, originFarmLatitude, originFarmLongitude, productNotes)
+        await supplyChain.processItem(upc, { from: ownerID })
+        await supplyChain.packItem(upc, { from: ownerID })
+        await supplyChain.sellItem(upc, price, { from: ownerID })
+        await supplyChain.buyItem(upc, { from: originFarmerID, value: balance });
+        // Retrieve the just now saved item from blockchain by calling function fetchItem()
+        const resultBufferOne = await supplyChain.fetchItemBufferOne.call(upc)
+        const resultBufferTwo = await supplyChain.fetchItemBufferTwo.call(upc)
 
-    //     // Verify the result set
-    //     assert.equal(resultBufferOne[0], sku, 'Error: Invalid item SKU')
+        // Verify the result set
+        assert.equal(resultBufferOne[0], 5, 'Error: Invalid item SKU')
 
-    // })
+    })
 
-    // // // 6th Test
+    // // 6th Test
     // it("Testing smart contract function shipItem() that allows a distributor to ship coffee", async () => {
-    //     //     const supplyChain = await SupplyChain.deployed()
 
     //     //     // Declare and Initialize a variable for event
 
@@ -179,18 +183,25 @@ contract('SupplyChain', function (accounts) {
 
 
     //     //     // Mark an item as shiped by calling function shipItem()
-    //     await supplyChain.shipItem(upc);
+    //     let balance = web3.utils.toWei("2", "ether");
+    //     const price = web3.utils.toWei('1', "ether");
+    //     await supplyChain.harvestItem(upc, originFarmerID, originFarmName, originFarmInformation, originFarmLatitude, originFarmLongitude, productNotes)
+    //     await supplyChain.processItem(upc, { from: ownerID })
+    //     await supplyChain.packItem(upc, { from: ownerID })
+    //     await supplyChain.sellItem(upc, price, { from: ownerID })
+    //     await supplyChain.buyItem(upc, { from: originFarmerID, value: balance });
+    //     await supplyChain.shipItem(upc, { from: ownerID });
 
     //     const resultBufferOne = await supplyChain.fetchItemBufferOne.call(upc)
     //     const resultBufferTwo = await supplyChain.fetchItemBufferTwo.call(upc)
 
     //     // Verify the result set
-    //     assert.equal(resultBufferOne[0], sku, 'Error: Invalid item SKU')
+    //     assert.equal(resultBufferOne[0], 6, 'Error: Invalid item SKU')
 
 
     // })
 
-    // // // 7th Test
+    // // 7th Test
     // it("Testing smart contract function receiveItem() that allows a retailer to mark coffee received", async () => {
 
     //     //     // Declare and Initialize a variable for event
@@ -200,7 +211,15 @@ contract('SupplyChain', function (accounts) {
 
 
     //     //     // Mark an item as Sold by calling function receiveItems()
-    //     await supplyChain.receiveItem(upc);
+    //     let balance = web3.utils.toWei("2", "ether");
+    //     const price = web3.utils.toWei('1', "ether");
+    //     await supplyChain.harvestItem(upc, originFarmerID, originFarmName, originFarmInformation, originFarmLatitude, originFarmLongitude, productNotes)
+    //     await supplyChain.processItem(upc, { from: ownerID })
+    //     await supplyChain.packItem(upc, { from: ownerID })
+    //     await supplyChain.sellItem(upc, price, { from: ownerID })
+    //     await supplyChain.buyItem(upc, { from: originFarmerID, value: balance });
+    //     await supplyChain.shipItem(upc, { from: ownerID });
+    //     await supplyChain.receiveItem(upc, { from: ownerID });
 
     //     // Retrieve the just now saved item from blockchain by calling function fetchItem()
 
@@ -208,11 +227,11 @@ contract('SupplyChain', function (accounts) {
     //     const resultBufferTwo = await supplyChain.fetchItemBufferTwo.call(upc)
 
     //     // Verify the result set
-    //     assert.equal(resultBufferOne[0], sku, 'Error: Invalid item SKU')
+    //     assert.equal(resultBufferOne[0], 7, 'Error: Invalid item SKU')
 
     // })
 
-    // // // 8th Test
+    // // 8th Test
     // it("Testing smart contract function purchaseItem() that allows a consumer to purchase coffee", async () => {
 
     //     // Declare and Initialize a variable for event
@@ -222,6 +241,16 @@ contract('SupplyChain', function (accounts) {
 
 
     //     // Mark an item as Sold by calling function buyItem()
+    //     let balance = web3.utils.toWei("2", "ether");
+    //     const price = web3.utils.toWei('1', "ether");
+    //     await supplyChain.harvestItem(upc, originFarmerID, originFarmName, originFarmInformation, originFarmLatitude, originFarmLongitude, productNotes)
+    //     await supplyChain.processItem(upc, { from: ownerID })
+    //     await supplyChain.packItem(upc, { from: ownerID })
+    //     await supplyChain.sellItem(upc, price, { from: ownerID })
+    //     await supplyChain.buyItem(upc, { from: originFarmerID, value: balance });
+    //     await supplyChain.shipItem(upc, { from: ownerID });
+    //     await supplyChain.receiveItem(upc, { from: ownerID });
+
     //     await supplyChain.purchaseItem(upc);
 
     //     // Retrieve the just now saved item from blockchain by calling function fetchItem()
