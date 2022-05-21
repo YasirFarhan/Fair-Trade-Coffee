@@ -18,10 +18,8 @@ contract SupplyChain is
     // Define 'owner'
     // address owner;
 
-    // Define a variable called 'upc' for Universal Product Code (UPC)
     uint256 upc;
 
-    // Define a variable called 'sku' for Stock Keeping Unit (SKU)
     uint256 sku;
 
     // Define a public mapping 'items' that maps the UPC to an Item.
@@ -64,7 +62,7 @@ contract SupplyChain is
         address consumerID; // Metamask-Ethereum address of the Consumer
     }
 
-    // // Define 8 events with the same 8 state values and accept 'upc' as input argument
+    // Define 8 events with the same 8 state values and accept 'upc' as input argument
     event Harvested(uint256 upc);
     event Processed(uint256 upc);
     event Packed(uint256 upc);
@@ -73,12 +71,6 @@ contract SupplyChain is
     event Shipped(uint256 upc);
     event Received(uint256 upc);
     event Purchased(uint256 upc);
-
-    // // Define a modifer that checks to see if msg.sender == owner of the contract
-    // // modifier onlyOwner(address owner) {
-    // //     require(msg.sender == owner);
-    // //     _;
-    // // }
 
     // Define a modifer that verifies the Caller
     modifier verifyCaller(address _address) {
@@ -201,9 +193,7 @@ contract SupplyChain is
     // Define a function 'processtItem' that allows a farmer to mark an item 'Processed'
     function processItem(uint256 _upc)
         public
-        // Call modifier to check if upc has passed previous supply chain stage
-        harvested(_upc)
-        // Call modifier to verify caller of this function
+        harvested(_upc) 
         onlyFarmer
     {
         // Update the appropriate fields
@@ -277,16 +267,16 @@ contract SupplyChain is
     function shipItem(uint256 _upc)
         public
         // Call modifier to check if upc has passed previous supply chain stage
-        sold(_upc)
-    // Call modifier to verify caller of this function
-    // onlyDistributor
+        // sold(_upc)
+        // Call modifier to verify caller of this function
+        onlyDistributor
     {
         // Update the appropriate fields
+
         Item memory item = items[_upc];
         item.ownerID = msg.sender;
-        item.itemState = State.Shipped;
         item.distributorID = msg.sender;
-        // items[_upc] = item;
+        item.itemState = State.Shipped;
         // Emit the appropriate event
         emit Shipped(_upc);
     }
@@ -296,15 +286,15 @@ contract SupplyChain is
     function receiveItem(uint256 _upc)
         public
         // Call modifier to check if upc has passed previous supply chain stage
-        shipped(_upc)
+        // shipped(_upc)
         // Call modifier to verify caller of this function
         onlyRetailer
     {
         // Update the appropriate fields - ownerID, retailerID, itemState
         Item memory item = items[_upc];
         item.ownerID = msg.sender;
+        item.retailerID = msg.sender;
         item.itemState = State.Received;
-        items[_upc] = item;
         // Emit the appropriate event
         emit Received(_upc);
     }
@@ -339,9 +329,8 @@ contract SupplyChain is
             string memory originFarmName,
             string memory originFarmInformation,
             string memory originFarmLatitude,
-            string memory originFarmLongitude //,
+            string memory originFarmLongitude
         )
-    // State  itemState
     {
         // Assign values to the 8 parameters
         Item memory item = items[_upc];
@@ -353,8 +342,7 @@ contract SupplyChain is
             originFarmName = item.originFarmName,
             originFarmInformation = item.originFarmInformation,
             originFarmLatitude = item.originFarmLatitude,
-            originFarmLongitude = item.originFarmLongitude //,
-            // itemState = item.itemState
+            originFarmLongitude = item.originFarmLongitude
         );
     }
 
