@@ -244,7 +244,7 @@ contract SupplyChain is
         item.productPrice = _price;
         items[_upc] = item;
         // Emit the appropriate event
-        emit Sold(_upc);
+        emit ForSale(upc);
     }
 
     // Define a function 'buyItem' that allows the disributor to mark an item 'Sold'
@@ -254,7 +254,7 @@ contract SupplyChain is
         public
         payable
         // Call modifier to check if upc has passed previous supply chain stage
-        // sold(_upc)
+        // forSale(_upc)
         // Call modifer to check if buyer has paid enough
         paidEnough(items[_upc].productPrice)
         // Call modifer to send any excess ether back to buyer
@@ -277,14 +277,15 @@ contract SupplyChain is
     function shipItem(uint256 _upc)
         public
         // Call modifier to check if upc has passed previous supply chain stage
-        // sold(_upc)
-        // Call modifier to verify caller of this function
-        // onlyDistributor
+        sold(_upc)
+    // Call modifier to verify caller of this function
+    // onlyDistributor
     {
         // Update the appropriate fields
         Item memory item = items[_upc];
         item.ownerID = msg.sender;
         item.itemState = State.Shipped;
+        item.distributorID = msg.sender;
         // items[_upc] = item;
         // Emit the appropriate event
         emit Shipped(_upc);

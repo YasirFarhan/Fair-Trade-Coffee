@@ -163,7 +163,7 @@ contract('SupplyChain', function (accounts) {
         await supplyChain.processItem(upc, { from: ownerID })
         await supplyChain.packItem(upc, { from: ownerID })
         await supplyChain.sellItem(upc, price, { from: ownerID })
-        await supplyChain.buyItem(upc, { from: originFarmerID, value: balance });
+        await supplyChain.buyItem(upc, { from: distributorID, value: balance });
         // Retrieve the just now saved item from blockchain by calling function fetchItem()
         const resultBufferOne = await supplyChain.fetchItemBufferOne.call(upc)
         const resultBufferTwo = await supplyChain.fetchItemBufferTwo.call(upc)
