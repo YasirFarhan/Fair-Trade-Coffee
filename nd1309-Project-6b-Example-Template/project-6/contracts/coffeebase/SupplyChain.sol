@@ -84,14 +84,6 @@ contract SupplyChain is
         _;
     }
 
-    // Define a modifier that checks the price and refunds the remaining balance
-    modifier checkValue(uint256 _upc) {
-        _;
-        uint256 _price = items[_upc].productPrice;
-        uint256 amountToReturn = msg.value - _price;
-        payable(items[_upc].consumerID).transfer(amountToReturn);
-    }
-
     // Define a modifier that checks if an item.state of a upc is Harvested
     modifier harvested(uint256 _upc) {
         require(items[_upc].itemState == State.Harvested);
@@ -169,7 +161,7 @@ contract SupplyChain is
         string memory _originFarmLatitude,
         string memory _originFarmLongitude,
         string memory _productNotes
-    ) public onlyFarmer {
+    ) public onlyFarmer() {
         // Add the new item as part of Harvest
         Item memory item;
         item.sku = sku;
@@ -191,11 +183,7 @@ contract SupplyChain is
     }
 
     // Define a function 'processtItem' that allows a farmer to mark an item 'Processed'
-    function processItem(uint256 _upc)
-        public
-        harvested(_upc) 
-        onlyFarmer
-    {
+    function processItem(uint256 _upc) public harvested(_upc) onlyFarmer {
         // Update the appropriate fields
         Item memory item = items[_upc];
         item.itemState = State.Processed;
@@ -210,7 +198,7 @@ contract SupplyChain is
         // Call modifier to check if upc has passed previous supply chain stage
         itemProcessed(_upc)
         // Call modifier to verify caller of this function
-        onlyFarmer
+        onlyFarmer()
     {
         // Update the appropriate fields
         Item memory item = items[_upc];
@@ -226,11 +214,11 @@ contract SupplyChain is
         // Call modifier to check if upc has passed previous supply chain stage
         packed(_upc)
         // Call modifier to verify caller of this function
-        onlyFarmer
+        onlyFarmer()
     {
         // Update the appropriate fields
         Item memory item = items[_upc];
-        item.itemState = State.Sold;
+        item.itemState = State.ForSale;
         item.productPrice = _price;
         items[_upc] = item;
         // Emit the appropriate event
@@ -244,11 +232,9 @@ contract SupplyChain is
         public
         payable
         // Call modifier to check if upc has passed previous supply chain stage
-        // forSale(_upc)
+        forSale(_upc)
         // Call modifer to check if buyer has paid enough
         paidEnough(items[_upc].productPrice)
-        // Call modifer to send any excess ether back to buyer
-        checkValue(_upc)
     {
         // Update the appropriate fields - ownerID, distributorID, itemState
         Item memory item = items[_upc];
@@ -258,6 +244,10 @@ contract SupplyChain is
         items[_upc] = item;
         // Transfer money to farmer
         payable(item.originFarmerID).transfer(item.productPrice);
+
+        uint256 _price = items[_upc].productPrice;
+        uint256 amountToReturn = msg.value - _price;
+        payable(items[_upc].consumerID).transfer(amountToReturn);
         // emit the appropriate event
         emit Sold(_upc);
     }
@@ -267,16 +257,14 @@ contract SupplyChain is
     function shipItem(uint256 _upc)
         public
         // Call modifier to check if upc has passed previous supply chain stage
-        // sold(_upc)
+        sold(_upc)
         // Call modifier to verify caller of this function
-        onlyDistributor
+        onlyDistributor()
     {
-        // Update the appropriate fields
-
         Item memory item = items[_upc];
         item.ownerID = msg.sender;
-        item.distributorID = msg.sender;
         item.itemState = State.Shipped;
+        item.distributorID = msg.sender;
         // Emit the appropriate event
         emit Shipped(_upc);
     }
