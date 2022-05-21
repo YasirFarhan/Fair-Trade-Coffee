@@ -66,6 +66,7 @@ contract('SupplyChain', function (accounts) {
         // Verify the result set
         assert.equal(resultBufferOne[0], 2, 'Error: Invalid item SKU')
         assert.equal(resultBufferOne[1], upc, 'Error: Invalid item UPC')
+        assert.equal(resultBufferTwo[5], 1, 'Error: Invalid item State')
     })
 
 
@@ -84,6 +85,7 @@ contract('SupplyChain', function (accounts) {
         // Verify the result set
         assert.equal(resultBufferOne[0], 3, 'Error: Invalid item SKU')
         assert.equal(resultBufferOne[1], upc, 'Error: Invalid item UPC')
+        assert.equal(resultBufferTwo[5], 2, 'Error: Invalid item State')
     })
 
     // 4th Test
@@ -99,6 +101,7 @@ contract('SupplyChain', function (accounts) {
         // Verify the result set
         assert.equal(resultBufferOne[0], 4, 'Error: Invalid item SKU')
         assert.equal(resultBufferOne[1], upc, 'Error: Invalid item UPC')
+        assert.equal(resultBufferTwo[5], 3, 'Error: Invalid item State')
     })
 
     // 5th Test
@@ -117,6 +120,7 @@ contract('SupplyChain', function (accounts) {
         // Verify the result set
         assert.equal(resultBufferOne[0], 5, 'Error: Invalid item SKU')
         assert.equal(resultBufferOne[1], upc, 'Error: Invalid item UPC')
+        assert.equal(resultBufferTwo[5], 4, 'Error: Invalid item State')
     })
 
     // 6th Test
@@ -136,6 +140,7 @@ contract('SupplyChain', function (accounts) {
         // Verify the result set
         assert.equal(resultBufferOne[0], 6, 'Error: Invalid item SKU')
         assert.equal(resultBufferOne[1], upc, 'Error: Invalid item UPC')
+        assert.equal(resultBufferTwo[5], 4, 'Error: Invalid item State')
     })
 
     // 7th Test
@@ -155,6 +160,7 @@ contract('SupplyChain', function (accounts) {
         // Verify the result set
         assert.equal(resultBufferOne[0], 7, 'Error: Invalid item SKU')
         assert.equal(resultBufferOne[1], upc, 'Error: Invalid item UPC')
+        assert.equal(resultBufferTwo[5], 4, 'Error: Invalid item State')
     })
 
     // 8th Test
@@ -176,6 +182,7 @@ contract('SupplyChain', function (accounts) {
         // Verify the result set
         assert.equal(resultBufferOne[0], 8, 'Error: Invalid item SKU')
         assert.equal(resultBufferOne[1], upc, 'Error: Invalid item UPC')
+        assert.equal(resultBufferTwo[5], 4, 'Error: Invalid item State')
     })
 
     // // 9th Test
