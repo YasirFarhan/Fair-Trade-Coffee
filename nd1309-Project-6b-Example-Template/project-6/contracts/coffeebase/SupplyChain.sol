@@ -277,7 +277,7 @@ contract SupplyChain is
         // Call modifier to check if upc has passed previous supply chain stage
         // shipped(_upc)
         // Call modifier to verify caller of this function
-        onlyRetailer
+        onlyRetailer()
     {
         // Update the appropriate fields - ownerID, retailerID, itemState
         Item memory item = items[_upc];
@@ -295,7 +295,7 @@ contract SupplyChain is
         // Call modifier to check if upc has passed previous supply chain stage
         // processed(_upc)
         // Access Control List enforced by calling Smart Contract / DApp
-        onlyConsumer
+        onlyConsumer()
     {
         // Update the appropriate fields - ownerID, consumerID, itemState
         Item memory item = items[_upc];
