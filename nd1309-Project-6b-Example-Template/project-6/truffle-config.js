@@ -17,12 +17,9 @@
  * phrase from a file you've .gitignored so it doesn't accidentally become public.
  *
  */
-
  const HDWalletProvider = require('@truffle/hdwallet-provider');
  const fs = require('fs');
-//  const mnemonic = fs.readFileSync(".secret").toString().trim();
  const private_keys = ['6d921f280ae37c7ec5c5077ac9654ca1bf96d05898a0aa4da3b380da3ce6ced5']
- 
  
  module.exports = {
    /**
@@ -33,6 +30,8 @@
     * network from the command line, e.g
     *
     * $ truffle test --network <network-name>
+// to test against runkeby: truffle test --network rinkeby
+// to deploy contract to rinkeby: truffle migrate --network rinkeby
     */
  
    networks: {
@@ -42,6 +41,19 @@
      // tab if you use this network and you must also set the `host`, `port` and `network_id`
      // options below to some value.
      //
+
+     rinkeby: {
+      provider: () => new HDWalletProvider({
+        privateKeys: private_keys,
+        providerOrUrl: "https://rinkeby.infura.io/v3/58a0ff4ba47f4f02b2d26a0941ac20c6",
+        numberOfAddress:1
+      }),
+      network_id: 4,       // rinkeby's id
+      gas: 5500000,        // rinkeby has a lower block limit than mainnet
+      confirmations: 2,    // # of confs to wait between deployments. (default: 0)
+      timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
+      skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
+    },
      development: {
       host: "127.0.0.1",     // Localhost (default: none)
       port: 7545,            // Standard Ethereum port (default: none)
@@ -93,7 +105,7 @@
  
    // Set default mocha options here, use special reporters etc.
    mocha: {
-     // timeout: 100000
+     timeout: 500000
    },
  
    // Configure your compilers

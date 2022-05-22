@@ -1,21 +1,21 @@
 App = {
     web3Provider: null,
     contracts: {},
-    emptyAddress: "0x0000000000000000000000000000000000000000",
+    emptyAddress: "0x15054355fE4541C25feA001E5bdc01EbB2056b79",
     sku: 0,
     upc: 0,
-    metamaskAccountID: "0x0000000000000000000000000000000000000000",
-    ownerID: "0x0000000000000000000000000000000000000000",
-    originFarmerID: "0x0000000000000000000000000000000000000000",
+    metamaskAccountID: "0x15054355fE4541C25feA001E5bdc01EbB2056b79",
+    ownerID: "0x15054355fE4541C25feA001E5bdc01EbB2056b79",
+    originFarmerID: "0x15054355fE4541C25feA001E5bdc01EbB2056b79",
     originFarmName: null,
     originFarmInformation: null,
     originFarmLatitude: null,
     originFarmLongitude: null,
     productNotes: null,
     productPrice: 0,
-    distributorID: "0x0000000000000000000000000000000000000000",
-    retailerID: "0x0000000000000000000000000000000000000000",
-    consumerID: "0x0000000000000000000000000000000000000000",
+    distributorID: "0xD63e575cB34fbED043EcF1e3dd09005fbA887aD6",
+    retailerID: "0x13d2864dCABFee5708Dba341f54320c76C3445ee",
+    consumerID: "0x0E4CfCAe551d1676ce99622A1f0997c883811d32",
 
     init: async function () {
         App.readForm();
@@ -83,6 +83,7 @@ App = {
         }
 
         App.getMetaskAccountID();
+        web3.eth.defaultAccount = web3.eth.accounts[0];
 
         return App.initSupplyChain();
     },
