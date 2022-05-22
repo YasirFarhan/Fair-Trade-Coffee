@@ -92,7 +92,8 @@ contract SupplyChain is
 
     // Define a modifier that checks if an item.state of a upc is Processed
     modifier itemProcessed(uint256 _upc) {
-        require(items[_upc].itemState == State.Processed);
+        require(items[_upc].itemState == State.Processed,
+            "Item must be Processed");
         _;
     }
 
@@ -101,7 +102,7 @@ contract SupplyChain is
     modifier packed(uint256 _upc) {
         require(
             items[_upc].itemState == State.Packed,
-            "Item must be packed first"
+            "Item must be Packed"
         );
         _;
     }
